@@ -1,0 +1,81 @@
+[
+ {
+  "title": "Senior React & Node Developer",
+  "company": "lemon.io",
+  "location": "Madrid",
+  "province": "Madrid (Híbrido)",
+  "publishDateISO": "2026-11-25T00:00:00.000Z",
+  "salaryMin": null,
+  "salaryMax": null,
+  "salaryPeriod": null,
+  "salaryText": null,
+  "workArrangement": "HYBRID",
+  "experienceLevel": "Más de 5 años",
+  "technologies": [
+   "React",
+   "Node",
+   "TypeScript"
+  ],
+  "descriptionText": "Lemon.io helps companies in the US and Europe hire experienced engineers, from funded startups to teams like Klarna, Retool, and Pinterest. Weve been doing this since 2015, and more than 1,500 companies have hired engineers through us.\n\nWe are seeking a Senior React & Node Developer for our client. Its a SaaS platform for supplier intelligence and value-chain transparency, used by around 2,500 companies in 50+ countries. Youll work on their Business Partner Transparency product inside a serverless, enterprise-grade platform, building software that automates complex compliance workflows.\n\nInvolvement: full-time\n\nLocation: Madrid, on-site (hybrid). Relocation bonus is available. Only for candidates with EU citizenship or an equivalent right to work in Spain (visa sponsorship not available)\n\nRequirements:\n\n- 5+ years of experience as a software developer\n- 3+ years of experience with Node.js and React.js\n- 3+ years of experience with TypeScript\n- Familiarity with AI-assisted coding is a must\n- Strong product mindset - proven in-house experience in product companies\n\n- Clear and effective communication in English  advanced ability to discuss business tasks, justify decisions, and communicate issues. Good self-presentation is also essential for upcoming client calls.\n- Adaptability and flexibility  the ability to onboard onto a project promptly after accepting it and start delivering results quickly.",
+  "url": "https://www.tecnoempleo.com/senior-react-node-developer-lemonio/typescript/rf-33b31d65325c43162d48",
+  "euWorkEligibilityRequired": false,
+  "contractType": "Indefinido"
+ },
+ {
+  "title": "Senior Full Stack Developer (React / TypeScript)",
+  "company": "Infinitum Digital Transformation",
+  "location": "Barcelona",
+  "province": "Barcelona",
+  "publishDateISO": "2026-11-25T00:00:00.000Z",
+  "salaryMin": 54000,
+  "salaryMax": 60000,
+  "salaryPeriod": "YEAR",
+  "salaryText": "€54000–€60000/year",
+  "workArrangement": null,
+  "experienceLevel": "Más de 5 años",
+  "technologies": [
+   "React",
+   "TypeScript",
+   "Next.js",
+   "AWS",
+   "Node.js",
+   "Java",
+   "Spring Boot",
+   "JavaScript",
+   "Docker",
+   "Serverless",
+   "Terraform"
+  ],
+  "descriptionText": "At Infinitum Digital, we are looking for an experienced Senior Full Stack Developer to join a challenging technology project, developing scalable, reliable and high-performance digital solutions.\n\nWe are seeking a software engineer with strong frontend expertise, solid backend development skills and proven experience working with AWS in production environments.\n\nYOUR RESPONSIBILITIES\n\nDesign, develop and maintain modern web applications using React, Next.js and TypeScript.\n\nDevelop and integrate backend services using Node.js/TypeScript or Java/Spring.\n\nWork with AWS cloud infrastructure in production environments, including containerized or serverless architectures.\n\nContribute to software architecture, system design and technical decision-making.\n\nEnsure high standards of code quality, maintainability, performance and scalability.\n\nCollaborate with engineering teams to deliver reliable technical solutions.\n\nREQUIRED EXPERIENCE AND SKILLS\n\nMinimum 7 years of professional software development experience, excluding internships.\n\nSenior-level expertise in React, Next.js and TypeScript.\n\nSolid backend development experience with Node.js/TypeScript OR Java/Spring.\n\nProven hands-on experience with AWS in production environments, including containers or serverless technologies.\n\nStrong understanding of software architecture, system design and engineering best practices.\n\nProfessional working proficiency in English.\n\nBased in Barcelona or available to work in a hybrid model.\n\nNICE T",
+  "url": "https://www.tecnoempleo.com/senior-full-stack-developer-react-typescript-infin/nextjs-aws/rf-7e6f104dd2b1f365094d",
+  "euWorkEligibilityRequired": false,
+  "contractType": "Indefinido"
+ },
+ {
+  "title": "Líder Técnico/a Java",
+  "company": "Digital Talent Agency",
+  "location": "Madrid",
+  "province": "Madrid (Híbrido)",
+  "publishDateISO": "2026-11-25T00:00:00.000Z",
+  "salaryMin": 36000,
+  "salaryMax": 48000,
+  "salaryPeriod": "YEAR",
+  "salaryText": "€36000–€48000/year",
+  "workArrangement": "HYBRID",
+  "experienceLevel": "Más de 5 años",
+  "technologies": [
+   "java",
+   "microservicios",
+   "spring",
+   "angular",
+   "node",
+   "react",
+   "javascript",
+   "j2ee"
+  ],
+  "descriptionText": "Ubicacion: Manoteras, Madrid (Modalidad Hibrida) 3 dias presenciales en oficina y 2 dias de teletrabajo\n\nAnos de Experiencia Requeridos: 5+ anos \n\nEn Zemsania, buscamos, para incorporacion directa a plantilla de importante empresa tecnologica, un perfil de Senior Full Stack Developer / Technical Leader . Si eres un apasionado de la tecnologia, con una solida experiencia en el stack Java y Angular, y buscas un entorno de trabajo dinamico e innovador, esta es tu oportunidad!\n\nResponsabilidades Principales:\n\nAcompanar tecnicamente a los equipos de desarrollo durante la ejecucion de proyectos.\nGarantizar la correcta aplicacion de la arquitectura de software definida.\nSupervisar el diseno tecnico de bajo nivel de las soluciones.\nResolver dudas tecnicas y apoyar a los equipos de desarrollo.\nVelar por la calidad de los entregables.\nParticipar en despliegues y pruebas en distintos entornos.\nDefinir procedimientos y buenas practicas para resolver problemas recurrentes.\nColaborar con los equipos de testing y calidad.\n\nInformacion acerca del Proyecto:\n\nLa posicion se integrara en el equipo de Arquitectura, actuando como referente tecnico transversal para los distintos proyectos de desarrollo de la compania. Su mision principal sera asegurar la alineacion entre la arquitectura corporativa y la ejecucion tecnica de los proyectos\n\nRequisitos Indispensables:\n\nFormacion en Ingenieria Informatica, Desarrollo de Aplicaciones o similar.\nExperiencia en arquitecturas de microservicios.\nConocimien",
+  "url": "https://www.tecnoempleo.com/lider-tecnico-java-digital-talent-agency/microservicios-spring/rf-17051fbeb25ff35eeb49",
+  "euWorkEligibilityRequired": true,
+  "contractType": "Indefinido"
+ }
+]

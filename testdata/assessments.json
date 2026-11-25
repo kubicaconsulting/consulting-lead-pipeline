@@ -1,0 +1,4 @@
+[
+ {"company":"Acme Payments","domain":"acmepay.io","market":"es","website":"https://acmepay.io","industry_tier":"fintech","headcount":350,"funding":"c_plus","platform":"modernise","sponsorship":"unknown","local_entity":"yes","open_role_urls":["https://example.com/jobs/1"],"reason":"Barcelona fintech replacing its legacy payments core","sources":"https://acmepay.io/about"},
+ {"company":"Beta Insure SL","domain":"","market":"es","website":"","industry_tier":"agency_outsourcing","headcount":30,"funding":"unknown","platform":"maintenance","sponsorship":"unknown","local_entity":"unknown","open_role_urls":[],"reason":"Small consultancy","sources":""}
+]

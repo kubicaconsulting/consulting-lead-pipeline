@@ -1,0 +1,83 @@
+# Global settings. A market profile (config/markets/<code>.yaml) can override any key.
+# Regexes use Go RE2 syntax (no lookahead/lookbehind) and are matched case-insensitively.
+
+tier: free                # free | paid — paid enables the sources marked tier: paid
+
+pass_threshold: 65        # company score needed before contacts and drafts are created
+reassess_days: 60         # skip a company assessed within this window unless it posts a new matching role
+daily_target: 10          # companies fully assessed per run
+max_contacts: 3           # contacts per passing company
+senior_years: 5           # "5+ years" with no seniority in the title counts as senior
+
+# Industry tier -> sub-score (0..1). Claude picks one key per company.
+industries:
+  fintech: 1.0
+  insurtech: 0.7
+  travel: 0.7
+  mobility: 0.7
+  energy: 0.7
+  healthtech: 0.7
+  other_product: 0.4
+  agency_outsourcing: 0.1
+  unknown: 0.4
+
+# Company score: decides outreach. Sums to 100.
+company_weights:
+  industry: 33.3
+  maturity: 26.7
+  platform: 33.3
+  sponsorship: 6.7
+
+# Role score: ranks job ads. Sums to 100.
+role_weights:
+  level: 40
+  salary: 30
+  platform: 30
+
+target_stacks: [python, go, node]
+
+stacks:
+  node: '\bnode\.?js\b|\bnode\b|\bnest\.?js\b|\bexpress\.?js\b|\bfastify\b|\btypescript\b'
+  go: '\bgolang\b|\bgo\b'
+  python: '\bpython\b|\bdjango\b|\bfastapi\b|\bflask\b'
+  java: '\bjava\b|\bspring boot\b|\bkotlin\b|\bscala\b'
+  dotnet: '\.net\b|\bc#|\basp\.net\b'
+  php: '\bphp\b|\blaravel\b|\bsymfony\b'
+  ruby: '\bruby\b'
+  rust_cpp: '\brust\b|c\+\+'
+  elixir: '\belixir\b'
+
+# Removed from the text before stack matching, so "go live" is not read as Go.
+stack_noise: ['\bgo (to|live|beyond|through|ahead|further|out|back|above)\b', '\bon the go\b', '\bgo-to\b', '\bgo/no-go\b']
+
+junior_title: ['\bjunior\b', '\bjr\.?\b', '\btrainee\b', '\bintern\b', '\binternship\b', 'pr[aá]cticas', 'becari', '\bgraduate\b', '\bmid[- ]?level\b', '\bsemi[- ]?senior\b']
+senior_title: ['\bsenior\b', '\bs[eé]nior\b', '\bsr\.?(\s|$)', '\bexpert\b', '\bexperto\b']
+lead_title: ['\bstaff\b', '\bprincipal\b', '\blead\b', '\bl[ií]der\b', '\bhead of\b', '\barchitect\b', '\barquitect']
+em_title: ['engineering manager', 'manager de ingenier', 'jefe de (equipo|desarrollo)']
+
+platform_signals:
+  platform: '\bplatform\b|\bplataforma\b'
+  scale: 'high[- ]traffic|alto tr[aá]fico|millions of (users|requests|events|transactions)|millones de (usuarios|transacciones)|at scale|a escala'
+  distributed: 'distributed systems|sistemas distribuidos'
+  legacy: '\blegacy\b|\blegado\b'
+  migration: '\bmigrat|\bmigraci'
+  rearchitecture: 're-?architect|re-?arquitect|rebuild|rewrite'
+  monolith: '\bmonolit'
+  replatform: 'replatform'
+  modernisation: 'moderni[sz]|moderniza'
+
+senior_signals:
+  system_design: 'system design|software architecture|arquitectura (de software|del sistema|t[eé]cnica)|architectur(e|al) (decisions|design)|technical design|high[- ]level design|distributed systems|sistemas distribuidos'
+  leadership: '\bmentor|technical leadership|lead (the )?(team|engineers|developers)|liderar|liderazgo|tech lead|coach'
+  reviews: 'code review|revisi[oó]n(es)? de c[oó]digo|design review|pull request'
+  ownership: '\bownership\b|end[- ]to[- ]end|de principio a fin|extremo a extremo'
+  scalability: 'scalab|escalab|high availability|alta disponibilidad|reliab|resilien'
+  production: 'on[- ]call|\bincident|guardia|post[- ]mortem|troubleshoot'
+  standards: 'technical (direction|strategy|roadmap|decisions|standards)|best practices|buenas pr[aá]cticas|engineering (standards|culture)|decisiones t[eé]cnicas'
+  stakeholders: 'stakeholder|cross[- ]functional|business requirements|requisitos de negocio'
+  hiring: 'interview candidates|technical interviews|entrevistas t[eé]cnicas|hiring process|procesos de selecci'
+
+remote_words: ['\bremote\b', '\bremoto\b', 'teletrabajo', '100% remot', 'fully remote', 'full remote', 'work from home']
+hybrid_words: ['\bhybrid\b', 'h[ií]brid', 'days (a week )?in (the )?office', 'd[ií]as (a la semana )?en (la )?oficina']
+remote_desc_words: ['100% remot', 'fully remote', 'full remote', 'remote[- ]first', 'teletrabajo 100', 'work from anywhere', 'remote (in|from) (spain|españa|europe)']
+onsite_words: ['on-?site', 'presencial', 'in[- ]office']

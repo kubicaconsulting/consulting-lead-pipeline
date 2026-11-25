@@ -1,0 +1,83 @@
+# Spain — default market profile. Copy this file to add a market (e.g. pt.yaml, nl.yaml) and run with --market <code>.
+
+market: es
+country: Spain
+currency: EUR
+outreach_lang: en
+
+# Gross yearly salary, in currency. Below the floor is excluded when a salary is stated.
+salary_floor: 56000       # Mossaab's minimum
+salary_target: 68000      # ≈ €48k net
+
+# Canonical city -> allowed work modes. "*" = any other city in the market.
+cities:
+  barcelona: [onsite, hybrid, remote]
+  "*": [remote]
+
+# Substrings that map a location to a canonical city.
+metro_aliases:
+  barcelona: [barcelona, bcn, sant cugat, "l'hospitalet", hospitalet de llobregat, badalona, castelldefels, sant joan desp, cornell, el prat, sabadell, terrassa]
+  madrid: [madrid, alcobendas, pozuelo, las rozas, getafe, tres cantos]
+  valencia: [valencia, valència]
+  malaga: [málaga, malaga]
+  sevilla: [sevilla, seville]
+  bilbao: [bilbao, vizcaya, bizkaia]
+  zaragoza: [zaragoza]
+
+# Work-permit wording (Highly Qualified Professional permit route).
+rights_required:
+  - 'right to work in (spain|the eu|europe)'
+  - '(must|need to|should)[^.]{0,40}(eu (citizen|passport)|eu citizenship|authori[sz]ed to work)'
+  - 'eu (work )?(permit|authori[sz]ation) (is )?required'
+  - 'permiso de trabajo (en vigor|vigente|v[aá]lido)'
+  - 'nacionalidad (europea|española)'
+  - '\bnie\b (en vigor|vigente)'
+  - 'already (live|living|based) in (spain|the eu)'
+based_in:
+  - 'based in spain'
+  - 'living in spain'
+  - 'residir en españa'
+  - 'residencia en españa'
+  - 'resident in spain'
+sponsor_offered:
+  - 'visa sponsorship'
+  - 'we sponsor'
+  - 'relocation (package|support|assistance|bonus|help)'
+  - '(ayuda|paquete) (de|a la|para la) (reubicaci|relocalizaci)'
+sponsor_refused:
+  - 'no (visa )?sponsorship'
+  - '(unable|not able) to sponsor'
+  - 'no relocation'
+  - 'relocation (is )?not (offered|provided|available)'
+  - 'no ofrecemos (patrocinio|visado|reubicaci)'
+  - 'sin (ayuda de )?reubicaci'
+
+sources:
+  - name: Indeed Spain
+    kind: generic
+    via: indeed_connector
+    tier: free
+    queries: ["senior backend engineer", "senior golang developer", "senior python developer", "senior node.js developer", "backend tech lead"]
+    input: {country: es, locations: ["Barcelona", "Spain remote"]}
+  - name: LinkedIn (Apify)
+    kind: linkedin
+    via: apify
+    actor: fantastic-jobs/advanced-linkedin-job-search-api
+    tier: free
+    queries: ["senior backend", "golang", "python backend", "node.js backend", "tech lead backend"]
+    input: {locationSearch: ["Spain"], timeRange: "24h", limit: 40, descriptionType: text}
+  - name: Tecnoempleo (Apify)
+    kind: tecnoempleo
+    via: apify
+    actor: blackfalcondata/tecnoempleo-scraper
+    tier: paid
+    queries: ["golang", "python", "node.js"]
+    input: {maxItems: 50}
+
+discovery_queries:
+  - fintech Barcelona series B 2026
+  - fintech España ronda de financiación 2026
+  - scale-up Barcelona hiring backend engineers
+  - Barcelona tech companies platform modernisation
+  - insurtech Spain funding 2026
+  - payments company Barcelona engineering hub
