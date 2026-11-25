@@ -31,11 +31,12 @@ type Config struct {
 	SalaryFloor  float64 `yaml:"salary_floor"`
 	SalaryTarget float64 `yaml:"salary_target"`
 
-	Cities       map[string][]string `yaml:"cities"`        // canonical city -> allowed modes; "*" = other cities
-	MetroAliases map[string][]string `yaml:"metro_aliases"` // canonical city -> substrings that map to it
-	RemoteWords  []string            `yaml:"remote_words"`
-	HybridWords  []string            `yaml:"hybrid_words"`
-	OnsiteWords  []string            `yaml:"onsite_words"`
+	Cities          map[string][]string `yaml:"cities"`        // canonical city -> allowed modes; "*" = other cities
+	MetroAliases    map[string][]string `yaml:"metro_aliases"` // canonical city -> substrings that map to it
+	RemoteWords     []string            `yaml:"remote_words"`
+	HybridWords     []string            `yaml:"hybrid_words"`
+	OnsiteWords     []string            `yaml:"onsite_words"`
+	RemoteDescWords []string            `yaml:"remote_desc_words"` // remote wording strong enough to trust in a description
 
 	RightsRequired []string `yaml:"rights_required"`
 	BasedIn        []string `yaml:"based_in"`

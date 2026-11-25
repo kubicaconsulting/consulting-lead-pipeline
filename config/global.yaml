@@ -79,4 +79,5 @@ senior_signals:
 
 remote_words: ['\bremote\b', '\bremoto\b', 'teletrabajo', '100% remot', 'fully remote', 'full remote', 'work from home']
 hybrid_words: ['\bhybrid\b', 'h[ií]brid', 'days (a week )?in (the )?office', 'd[ií]as (a la semana )?en (la )?oficina']
+remote_desc_words: ['100% remot', 'fully remote', 'full remote', 'remote[- ]first', 'teletrabajo 100', 'work from anywhere', 'remote (in|from) (spain|españa|europe)']
 onsite_words: ['on-?site', 'presencial', 'in[- ]office']
