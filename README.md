@@ -101,7 +101,13 @@ The CV PDFs are private in Drive. Before the first drafts go out, set each one t
 
 ## Schedule
 
-See *Operations* below once the daily task is set up.
+- **When it runs:** a Claude scheduled task, "Daily lead pipeline (Spain)", every day at 06:41 Africa/Casablanca.
+- **What each run does:** it clones the default branch, follows `RUNBOOK.md` with `MARKET=es`, and ends with a summary in its session. You get a push notification when a run finishes.
+- **Pausing or changing it:** turn the task off in its settings, or edit its prompt. Changing the market in the prompt runs a different profile.
+- **Before the first useful run:**
+  - merge this branch into `main`;
+  - reconnect Gmail with permission to create drafts;
+  - set the three CV PDFs to "Anyone with the link can view".
 
 ## Privacy
 
