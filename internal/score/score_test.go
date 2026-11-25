@@ -77,3 +77,10 @@ func TestRole(t *testing.T) {
 		t.Errorf("mid role = %v", r)
 	}
 }
+
+func TestNoSponsorshipBlocksOutreach(t *testing.T) {
+	s := Company(model.Assessment{IndustryTier: "fintech", Headcount: 400, Platform: "both", Sponsorship: "none", LocalEntity: "yes"}, cfg(t))
+	if s.Outreach || !slices.Contains(s.Flags, "no_sponsorship") {
+		t.Errorf("outreach=%v flags=%v", s.Outreach, s.Flags)
+	}
+}

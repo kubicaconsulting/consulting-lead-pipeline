@@ -19,7 +19,7 @@ The tracker is a native Google Sheet ("Lead Tracker") in the Drive folder "Spain
 | sponsorship | `offered`, `prior`, `unknown`, `none` |
 | local_entity | `yes`, `no`, `unknown`: does it have a legal entity in the market (needed for the HQP permit) |
 | company_score | 0–100 |
-| outreach | `yes` when score ≥ pass threshold and local entity is not `no` |
+| outreach | `yes` when score ≥ pass threshold, local entity is not `no` and sponsorship is not `none` |
 | flags | Comma-separated flags |
 | reason | One line explaining the score |
 | sources | Links used as evidence |
@@ -50,18 +50,18 @@ date, market, candidates, gated_pass, gated_excluded, assessed, passed_threshold
 
 ## Dashboard
 
-Set up once (Google Sheets syntax):
+Set up once (Google Sheets syntax). Formulas use whole columns, because appending rows shifts fixed ranges such as `B2:B`.
 
 | Cell | Content |
 |---|---|
 | A1:A7 | Labels: Companies assessed, Passing (outreach = yes), Average company score, Leads collected, Drafts waiting, Contacted, Replied |
-| B1 | `=COUNTA(Companies!B2:B)` |
-| B2 | `=COUNTIF(Companies!L2:L,"yes")` |
-| B3 | `=IFERROR(ROUND(AVERAGE(Companies!K2:K),1),0)` |
-| B4 | `=COUNTA(Leads!C2:C)` |
-| B5 | `=COUNTIF(Contacts!I2:I,"drafted")` |
-| B6 | `=COUNTIF(Contacts!I2:I,"contacted")` |
-| B7 | `=COUNTIF(Contacts!I2:I,"replied")` |
-| D1 / D2 | "By status" / `=IFERROR(QUERY(Companies!A2:S,"select R, count(B) where B is not null group by R label R 'status', count(B) 'companies'",0),"no companies yet")` |
-| G1 / G2 | "Top companies, last 7 days" / `=IFERROR(SORT(FILTER({Companies!B2:B,Companies!K2:K,Companies!N2:N},Companies!Q2:Q>=TEXT(TODAY()-7,"yyyy-mm-dd"),Companies!B2:B<>""),2,FALSE),"none yet")` |
-| G24 / G25 | "Recent runs" / `=IFERROR(SORT(FILTER('Run log'!A2:L,'Run log'!A2:A<>""),1,FALSE),"no runs yet")` |
+| B1 | `=COUNTA(Companies!B:B)-1` |
+| B2 | `=COUNTIF(Companies!L:L,"yes")` |
+| B3 | `=IFERROR(ROUND(AVERAGE(Companies!K:K),1),0)` |
+| B4 | `=COUNTA(Leads!C:C)-1` |
+| B5 | `=COUNTIF(Contacts!I:I,"drafted")` |
+| B6 | `=COUNTIF(Contacts!I:I,"contacted")` |
+| B7 | `=COUNTIF(Contacts!I:I,"replied")` |
+| D1 / D2 | "By status" / `=IFERROR(QUERY(Companies!A:S,"select R, count(B) where B is not null group by R label R 'status', count(B) 'companies'",1),"no companies yet")` |
+| G1 / G2 | "Top companies, last 7 days" / `=IFERROR(SORT(FILTER({Companies!B:B,Companies!K:K,Companies!N:N},IF(ISNUMBER(Companies!Q:Q),Companies!Q:Q,IFERROR(DATEVALUE(Companies!Q:Q),0))>=TODAY()-7,ROW(Companies!B:B)>1),2,FALSE),"none yet")` |
+| G24 / G25 | "Recent runs" / `=IFERROR(SORT(FILTER('Run log'!A:L,'Run log'!A:A<>"",ROW('Run log'!A:A)>1),1,FALSE),"no runs yet")` |

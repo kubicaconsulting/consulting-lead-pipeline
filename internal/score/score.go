@@ -25,6 +25,10 @@ func Company(a model.Assessment, c *config.Config) model.Scored {
 	}
 	s.CompanyScore = round1(s.CompanyScore)
 	s.Outreach = s.CompanyScore >= c.PassThreshold
+	if a.Sponsorship == "none" {
+		s.Outreach = false
+		s.Flags = append(s.Flags, "no_sponsorship")
+	}
 	switch a.LocalEntity {
 	case "no":
 		s.Outreach = false

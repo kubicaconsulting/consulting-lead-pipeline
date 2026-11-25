@@ -50,7 +50,7 @@ Nothing is ever sent automatically. Outreach stops at Gmail drafts, which I revi
 | Platform work (scale or modernisation) | 33.3 |
 | Sponsorship signals | 6.7 |
 
-- Outreach at **≥ 65**, and only if the company has a legal entity in the market, which the HQP permit requires.
+- Outreach at **≥ 65**, and only if the company has a legal entity in the market, which the HQP permit requires, and has not stated that it refuses visa sponsorship.
 
 **Role score (ranks ads).** Level and scope 40, salary against the €68k target 30, platform signals in the ad 30.
 
