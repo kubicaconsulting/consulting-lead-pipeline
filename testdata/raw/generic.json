@@ -1,0 +1,4 @@
+[
+ {"id":"g1","source":"indeed","market":"es","title":"Senior Backend Engineer (Go)","company":"Acme Payments","company_domain":"acmepay.io","location":"Barcelona, Catalonia","url":"https://example.com/jobs/1","desc":"Build our payments platform in Go. Hybrid, 2 days in office.","posted":"2026-11-25T00:00:00Z","salary_text":"60.000-70.000 € brutos/año"},
+ {"id":"g2","source":"manual","market":"es","title":"Python Tech Lead","company":"Beta Insure SL","url":"https://example.com/jobs/2","desc":"Remote in Spain. Migrate our legacy monolith.","posted":"2026-11-24T00:00:00Z"}
+]
