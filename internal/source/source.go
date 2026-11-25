@@ -136,6 +136,8 @@ func period(s string) string {
 		return "year"
 	case strings.Contains(s, "month"), strings.Contains(s, "mes"):
 		return "month"
+	case strings.Contains(s, "hour"), strings.Contains(s, "hora"):
+		return "hour"
 	case s == "":
 		return ""
 	}

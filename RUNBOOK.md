@@ -18,8 +18,9 @@ Read `config/global.yaml` and `config/markets/$MARKET.yaml`. They hold the thres
 
 - Read the Companies tab (`get_values`, `Companies!A2:Q`) of the Lead Tracker sheet.
 - Write `run/seen.json`: one `SeenCompany` per row of this market, with
-  - `key`: domain (column C) if present, else company name (column B), passed through the same normalisation as `gate.Key`: lowercase, legal suffixes removed (SL, SA, Inc...), only letters kept;
-  - `last_assessed`: column Q as RFC3339;
+  - `key`: the domain (column C) if present, else the company name (column B) passed through the same normalisation as `gate.Key`: lowercase, legal suffixes removed (SL, SA, Inc...), only letters kept;
+  - `name`: the company name (column B) exactly as written, so ads without a domain still match;
+  - `last_assessed`: column Q, written as `YYYY-MM-DD`; convert it to RFC3339 midnight UTC (`2026-11-25T00:00:00Z`);
   - `role_urls`: column P, split by newline.
 - Read the Contacts tab (`Contacts!A2:N`) to know who has already been contacted or has opted out.
 
@@ -92,7 +93,7 @@ For each scored company with `outreach == true`:
 
 Append one Run log row: date, market, candidates, gated_pass, gated_excluded, assessed, passed_threshold, contacts_found, drafts, errors, apify_spend_usd, notes.
 
-Then send a short summary message:
+Then end the run with a short summary as your reply in this session (do not email it):
 - how many companies were assessed and how many passed;
 - each passing company with its score and the one-line reason;
 - links to the new drafts, with a reminder that they are waiting for review and nothing was sent;

@@ -81,12 +81,16 @@ func Run(j model.Job, c *config.Config) model.Extracted {
 		if period == "unknown" {
 			lo, hi, period = salaryFromDesc(j.Desc)
 		}
-	} else if hi == 0 {
-		hi = lo
+	} else if period != "year" && period != "month" && period != "hour" {
+		period = guessPeriod(max(lo, hi))
 	}
-	if period == "month" {
+	switch period {
+	case "month":
 		lo, hi = lo*12, hi*12
 		x.Flags = append(x.Flags, "salary_monthly")
+	case "hour":
+		lo, hi = lo*1760, hi*1760
+		x.Flags = append(x.Flags, "salary_hourly")
 	}
 	x.SalaryLoYear, x.SalaryHiYear = lo, hi
 	return x
@@ -192,4 +196,15 @@ func stacks(title, desc string, c *config.Config) ([]string, string) {
 		}
 	}
 	return all, main
+}
+
+// guessPeriod reads a board's structured salary with no usable period by its size.
+func guessPeriod(v float64) string {
+	switch {
+	case v > 0 && v <= 500:
+		return "hour"
+	case v > 500 && v < 15000:
+		return "month"
+	}
+	return "year"
 }

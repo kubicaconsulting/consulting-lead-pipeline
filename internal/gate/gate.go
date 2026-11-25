@@ -68,7 +68,7 @@ func Run(jobs []model.Job, seen []model.SeenCompany, now time.Time, c *config.Co
 			g.Flags = append(g.Flags, "based_in_wording")
 		}
 		if x.Sponsorship == "refused" {
-			g.Flags = append(g.Flags, "sponsorship_refused")
+			fail("sponsorship_refused")
 		}
 
 		switch x.Level {
@@ -95,15 +95,17 @@ func Run(jobs []model.Job, seen []model.SeenCompany, now time.Time, c *config.Co
 		}
 
 		switch {
-		case x.SalaryHiYear == 0:
+		case x.SalaryHiYear == 0 && x.SalaryLoYear == 0:
 			g.Flags = append(g.Flags, "salary_unknown")
+		case x.SalaryHiYear == 0:
+			g.Flags = append(g.Flags, "salary_min_only") // "from X": the top of the range is unknown
 		case x.SalaryHiYear < c.SalaryFloor:
 			fail("salary_below_floor")
 		case x.SalaryHiYear < c.SalaryTarget:
 			g.Flags = append(g.Flags, "salary_below_target")
 		}
 
-		if recentlyAssessed(g.DedupeKey, j.URL, seen, now, c.ReassessDays) {
+		if recentlyAssessed(j, seen, now, c.ReassessDays) {
 			fail("recently_assessed")
 		}
 
@@ -130,9 +132,12 @@ func stackOK(x model.Extracted, c *config.Config) bool {
 	return x.MainStack == "mixed" || x.MainStack == "unknown" || slices.Contains(c.TargetStacks, x.MainStack)
 }
 
-func recentlyAssessed(key, url string, seen []model.SeenCompany, now time.Time, days int) bool {
+// recentlyAssessed matches the job's company against tracker rows by domain key,
+// by name key, or by the tracker's stored name, since ads rarely carry a domain.
+func recentlyAssessed(j model.Job, seen []model.SeenCompany, now time.Time, days int) bool {
+	key, name, url := Key(j.Company, j.CompanyDomain), Key(j.Company, ""), j.URL
 	for _, s := range seen {
-		if !Same(s.Key, key) {
+		if !Same(s.Key, key) && !Same(s.Key, name) && (s.Name == "" || !Same(Key(s.Name, ""), name)) {
 			continue
 		}
 		if now.Sub(s.LastAssessed) > time.Duration(days)*24*time.Hour {

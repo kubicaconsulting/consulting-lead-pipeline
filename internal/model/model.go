@@ -80,7 +80,8 @@ type Scored struct {
 
 // SeenCompany is a company already in the tracker.
 type SeenCompany struct {
-	Key          string    `json:"key"`
+	Key          string    `json:"key"`  // domain if known, else normalised name
+	Name         string    `json:"name"` // company name as written in the tracker
 	LastAssessed time.Time `json:"last_assessed"`
 	RoleURLs     []string  `json:"role_urls"`
 }

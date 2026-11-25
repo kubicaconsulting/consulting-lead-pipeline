@@ -121,3 +121,33 @@ func TestBatchDedupeKeepsRichest(t *testing.T) {
 		t.Fatalf("passed=%d first=%v", len(p), p)
 	}
 }
+
+func TestSeenByDomainMatchesJobByName(t *testing.T) {
+	j := base()
+	j.Company = "Glovo"
+	seen := []model.SeenCompany{{Key: "glovoapp.com", Name: "Glovo", LastAssessed: now.AddDate(0, 0, -5), RoleURLs: []string{j.URL}}}
+	if g := one(t, j, seen); g.Pass || !slices.Contains(g.Reasons, "recently_assessed") {
+		t.Errorf("company seen by domain not matched by name: pass=%v reasons=%v", g.Pass, g.Reasons)
+	}
+}
+
+func TestAdRefusingSponsorshipExcluded(t *testing.T) {
+	j := base()
+	j.Desc += " No visa sponsorship available."
+	if g := one(t, j, nil); g.Pass || !slices.Contains(g.Reasons, "sponsorship_refused") {
+		t.Errorf("pass=%v reasons=%v", g.Pass, g.Reasons)
+	}
+}
+
+func TestMinimumOnlySalaryNotExcluded(t *testing.T) {
+	j := base()
+	j.SalaryLo = 50000
+	if g := one(t, j, nil); !g.Pass || !slices.Contains(g.Flags, "salary_min_only") {
+		t.Errorf("board min-only: pass=%v reasons=%v flags=%v", g.Pass, g.Reasons, g.Flags)
+	}
+	k := base()
+	k.SalaryText = "Desde 50.000€ brutos/año"
+	if g := one(t, k, nil); !g.Pass || !slices.Contains(g.Flags, "salary_min_only") {
+		t.Errorf("text min-only: pass=%v reasons=%v flags=%v", g.Pass, g.Reasons, g.Flags)
+	}
+}

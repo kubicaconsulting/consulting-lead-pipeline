@@ -115,3 +115,30 @@ func TestRunSalaryYearly(t *testing.T) {
 		t.Errorf("desc salary → %v-%v", z.SalaryLoYear, z.SalaryHiYear)
 	}
 }
+
+func TestStructuredSalaryUnknownPeriod(t *testing.T) {
+	c := cfg(t)
+	h := Run(model.Job{SalaryLo: 45, SalaryHi: 60, SalaryPeriod: "unknown"}, c)
+	if h.SalaryHiYear != 60*1760 || !slices.Contains(h.Flags, "salary_hourly") {
+		t.Errorf("hourly guess → %v flags %v", h.SalaryHiYear, h.Flags)
+	}
+	m := Run(model.Job{SalaryLo: 3500, SalaryHi: 4500}, c)
+	if m.SalaryHiYear != 54000 || !slices.Contains(m.Flags, "salary_monthly") {
+		t.Errorf("monthly guess → %v flags %v", m.SalaryHiYear, m.Flags)
+	}
+	y := Run(model.Job{SalaryLo: 60000, SalaryHi: 70000}, c)
+	if y.SalaryHiYear != 70000 {
+		t.Errorf("yearly guess → %v", y.SalaryHiYear)
+	}
+	hr := Run(model.Job{SalaryLo: 50, SalaryHi: 70, SalaryPeriod: "hour"}, c)
+	if hr.SalaryHiYear != 70*1760 {
+		t.Errorf("hour period → %v", hr.SalaryHiYear)
+	}
+}
+
+func TestMinOnlySalaryText(t *testing.T) {
+	lo, hi, p := Salary("A partir de 50.000 €")
+	if lo != 50000 || hi != 0 || p != "year" {
+		t.Errorf("got %v %v %q", lo, hi, p)
+	}
+}

@@ -71,3 +71,20 @@ func TestUnknownMarket(t *testing.T) {
 		t.Fatalf("err = %v", err)
 	}
 }
+
+func TestMarketMapOverrideMergesKeys(t *testing.T) {
+	dir := t.TempDir()
+	os.MkdirAll(filepath.Join(dir, "markets"), 0o755)
+	os.WriteFile(filepath.Join(dir, "global.yaml"), []byte("industries: {fintech: 1.0, travel: 0.7}\ncities: {\"*\": [remote]}\n"), 0o644)
+	os.WriteFile(filepath.Join(dir, "markets", "xx.yaml"), []byte("industries: {travel: 0.2}\ncities: {lisbon: [onsite, hybrid, remote]}\n"), 0o644)
+	c, err := Load(dir, "xx")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.Industries["fintech"] != 1.0 || c.Industries["travel"] != 0.2 {
+		t.Errorf("industries = %v", c.Industries)
+	}
+	if len(c.Cities["*"]) != 1 || len(c.Cities["lisbon"]) != 3 {
+		t.Errorf("cities = %v", c.Cities)
+	}
+}

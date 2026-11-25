@@ -68,7 +68,7 @@ type Config struct {
 }
 
 // Load reads dir/global.yaml, then overlays dir/markets/<market>.yaml.
-// Values set in the market file win; maps are merged key by key.
+// Values set in the market file win. Maps are merged key by key; lists are replaced.
 func Load(dir, market string) (*Config, error) {
 	c := &Config{}
 	g, err := os.ReadFile(filepath.Join(dir, "global.yaml"))
@@ -85,11 +85,34 @@ func Load(dir, market string) (*Config, error) {
 		}
 		return nil, fmt.Errorf("read market profile: %w", err)
 	}
+	global := *c
 	if err := yaml.Unmarshal(m, c); err != nil {
 		return nil, fmt.Errorf("parse market profile %s: %w", market, err)
 	}
+	// A market map replaces the global one on unmarshal; put back the global
+	// keys the market did not set, so overriding one weight keeps the others.
+	c.Cities = mergeMap(global.Cities, c.Cities)
+	c.MetroAliases = mergeMap(global.MetroAliases, c.MetroAliases)
+	c.Stacks = mergeMap(global.Stacks, c.Stacks)
+	c.PlatformSignals = mergeMap(global.PlatformSignals, c.PlatformSignals)
+	c.SeniorSignals = mergeMap(global.SeniorSignals, c.SeniorSignals)
+	c.Industries = mergeMap(global.Industries, c.Industries)
+	c.CompanyWeights = mergeMap(global.CompanyWeights, c.CompanyWeights)
+	c.RoleWeights = mergeMap(global.RoleWeights, c.RoleWeights)
 	if c.Market == "" {
 		c.Market = market
 	}
 	return c, nil
+}
+
+func mergeMap[V any](global, market map[string]V) map[string]V {
+	if market == nil {
+		return global
+	}
+	for k, v := range global {
+		if _, ok := market[k]; !ok {
+			market[k] = v
+		}
+	}
+	return market
 }

@@ -10,6 +10,7 @@ var (
 	amountRe  = regexp.MustCompile(`(\d{1,3}(?:[.,]\d{3})+|\d+)(?:[.,]\d{1,2})?\s?([kK])?\b`)
 	monthRe   = regexp.MustCompile(`(?i)\bmes\b|/\s?mes|month|mensual|monthly|/\s?mo\b`)
 	upToRe    = regexp.MustCompile(`(?i)up to|hasta|max(imum)?\.?\s|m[aá]ximo`)
+	fromRe    = regexp.MustCompile(`(?i)\bfrom\b|desde|a partir de|starting (at|from)|min(imum)?\.?\s|m[ií]nimo`)
 	keywordRe = regexp.MustCompile(`(?i)salary|salario|rango salarial|banda salarial|retribuci[oó]n|compensation|pay range|sueldo|remuneraci[oó]n|brutos?/a[ñn]o|gross`)
 )
 
@@ -50,6 +51,9 @@ func Salary(text string) (lo, hi float64, period string) {
 	if len(amts) == 1 {
 		if upToRe.MatchString(text) {
 			return 0, amts[0], period
+		}
+		if fromRe.MatchString(text) {
+			return amts[0], 0, period
 		}
 		return amts[0], amts[0], period
 	}
