@@ -37,8 +37,8 @@ Nothing is ever sent automatically. Outreach stops at Gmail drafts, which I revi
 - stated salary below €56k gross;
 - Barcelona roles can be onsite, hybrid or remote; any other city must be remote;
 - excluded if the ad requires existing EU or Spanish work rights ("based in Spain" alone is only flagged);
-- excluded if the title is junior or mid level;
-- excluded if the main stack isn't Python, Go or Node.js/TypeScript;
+- excluded if the title is junior or mid level, or if the ad's stated minimum experience is below 5 years (roles asking for 10+ years are flagged and rank higher);
+- excluded if the ad doesn't use Python, Go or Node.js/TypeScript (only these three stacks are tracked; others are ignored);
 - excluded if the company was assessed in the last 60 days, unless it has posted a new matching role.
 
 **Company score (decides outreach).** Scored out of 100:

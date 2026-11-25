@@ -54,6 +54,10 @@ func Role(g model.GateResult, c *config.Config) float64 {
 	}
 	if lvl > 0 {
 		lvl += math.Min(0.05*float64(len(x.SeniorSignals)), 0.2)
+		if c.PreferredYears > 0 && x.YearsRequired >= c.PreferredYears {
+			lvl += 0.1
+		}
+		lvl = math.Min(lvl, 1)
 	}
 	sal := 0.4
 	switch {

@@ -91,8 +91,8 @@ func TestStackAndSignals(t *testing.T) {
 	if slices.Contains(y.Stacks, "go") {
 		t.Errorf("'go live' read as Go: %v", y.Stacks)
 	}
-	if y.MainStack != "java" {
-		t.Errorf("main stack = %q, want java", y.MainStack)
+	if len(y.Stacks) != 0 || y.MainStack != "unknown" {
+		t.Errorf("non-target stacks are not tracked: stacks %v main %q", y.Stacks, y.MainStack)
 	}
 	z := Run(model.Job{Title: "Senior Python / Go Engineer", Desc: "Python, Go"}, c)
 	if z.MainStack != "mixed" {
@@ -140,5 +140,27 @@ func TestMinOnlySalaryText(t *testing.T) {
 	lo, hi, p := Salary("A partir de 50.000 €")
 	if lo != 50000 || hi != 0 || p != "year" {
 		t.Errorf("got %v %v %q", lo, hi, p)
+	}
+}
+
+func TestYearsRequired(t *testing.T) {
+	c := cfg(t)
+	cases := []struct {
+		desc  string
+		years int
+		level string
+	}{
+		{"3-5 years of experience with Go", 3, "mid"},
+		{"5+ years of backend experience", 5, "senior"},
+		{"10+ años de experiencia en Python", 10, "senior"},
+		{"Buscamos 5 o más años de experiencia", 5, "senior"},
+		{"Founded 12 years ago. You bring 5+ years of experience.", 5, "senior"},
+		{"Founded 12 years ago.", 0, "unknown"},
+	}
+	for _, k := range cases {
+		x := Run(model.Job{Title: "Backend Engineer", Desc: k.desc}, c)
+		if x.YearsRequired != k.years || x.Level != k.level {
+			t.Errorf("%q → years %d level %q; want %d %q", k.desc, x.YearsRequired, x.Level, k.years, k.level)
+		}
 	}
 }

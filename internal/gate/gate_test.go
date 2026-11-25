@@ -57,6 +57,8 @@ func TestGates(t *testing.T) {
 		{"based in flagged", func(j *model.Job) { j.Desc += " Debes residir en España." }, true, "", "based_in_wording"},
 		{"junior excluded", func(j *model.Job) { j.Title = "Junior Backend Engineer" }, false, "seniority", ""},
 		{"java only excluded", func(j *model.Job) { j.Title = "Senior Java Engineer"; j.Desc = "Spring Boot. Hybrid." }, false, "stack", ""},
+		{"senior title but 3+ years excluded", func(j *model.Job) { j.Desc += " 3+ years of experience." }, false, "experience_below_min", ""},
+		{"10+ years flagged as preferred", func(j *model.Job) { j.Desc += " 10+ years of experience." }, true, "", "experience_10_plus"},
 		{"unknown level flagged", func(j *model.Job) { j.Title = "Backend Engineer" }, true, "", "level_unknown"},
 	}
 	for _, k := range cases {

@@ -30,11 +30,12 @@ type Job struct {
 type Extracted struct {
 	Stacks          []string `json:"stacks"`
 	MainStack       string   `json:"main_stack"`
-	Level           string   `json:"level"`       // junior|mid|senior|lead|em|unknown
-	Mode            string   `json:"mode"`        // onsite|hybrid|remote|unknown
-	City            string   `json:"city"`        // canonical city key, or "" when unknown
-	Rights          string   `json:"rights"`      // required|based_in|none
-	Sponsorship     string   `json:"sponsorship"` // offered|refused|unknown
+	Level           string   `json:"level"`          // junior|mid|senior|lead|em|unknown
+	YearsRequired   int      `json:"years_required"` // lowest stated minimum years of experience, 0 if none
+	Mode            string   `json:"mode"`           // onsite|hybrid|remote|unknown
+	City            string   `json:"city"`           // canonical city key, or "" when unknown
+	Rights          string   `json:"rights"`         // required|based_in|none
+	Sponsorship     string   `json:"sponsorship"`    // offered|refused|unknown
 	SalaryLoYear    float64  `json:"salary_lo_year"`
 	SalaryHiYear    float64  `json:"salary_hi_year"`
 	PlatformSignals []string `json:"platform_signals"`

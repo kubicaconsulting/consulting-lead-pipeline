@@ -43,11 +43,12 @@ type Config struct {
 	SponsorOffered []string `yaml:"sponsor_offered"`
 	SponsorRefused []string `yaml:"sponsor_refused"`
 
-	JuniorTitle []string `yaml:"junior_title"`
-	SeniorTitle []string `yaml:"senior_title"`
-	LeadTitle   []string `yaml:"lead_title"`
-	EMTitle     []string `yaml:"em_title"`
-	SeniorYears int      `yaml:"senior_years"` // years of experience that imply senior
+	JuniorTitle    []string `yaml:"junior_title"`
+	SeniorTitle    []string `yaml:"senior_title"`
+	LeadTitle      []string `yaml:"lead_title"`
+	EMTitle        []string `yaml:"em_title"`
+	SeniorYears    int      `yaml:"senior_years"`    // minimum years: implies senior; a lower stated minimum is excluded
+	PreferredYears int      `yaml:"preferred_years"` // years that rank a role higher
 
 	Stacks          map[string]string `yaml:"stacks"` // stack key -> regex
 	TargetStacks    []string          `yaml:"target_stacks"`

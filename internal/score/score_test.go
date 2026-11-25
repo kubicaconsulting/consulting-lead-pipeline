@@ -84,3 +84,10 @@ func TestNoSponsorshipBlocksOutreach(t *testing.T) {
 		t.Errorf("outreach=%v flags=%v", s.Outreach, s.Flags)
 	}
 }
+
+func TestRolePrefersTenPlusYears(t *testing.T) {
+	g := model.GateResult{X: model.Extracted{Level: "senior", YearsRequired: 10}}
+	if r := Role(g, cfg(t)); !near(r, 40*0.9+30*0.4+30*0.3) {
+		t.Errorf("role = %v", r)
+	}
+}

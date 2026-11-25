@@ -15,7 +15,9 @@ import (
 
 var (
 	reCache sync.Map
-	yearsRe = regexp.MustCompile(`(?i)(\d{1,2})\s?\+?\s?(?:years|años|yrs|year)`)
+	// "5+ years", "3-5 years", "10+ años", "5 o más años"; the first number is the minimum.
+	yearsRe      = regexp.MustCompile(`(?i)(\d{1,2})(?:\s*(?:-|–|to|a)\s*\d{1,2})?\s*(\+|o\s+m[aá]s)?\s*(?:years?|años|yrs)`)
+	experienceRe = regexp.MustCompile(`(?i)experien|\bexp\b|track record|trayectoria`)
 )
 
 // re compiles a pattern case-insensitively, once.
@@ -52,6 +54,7 @@ func keys(text string, m map[string]string) []string {
 func Run(j model.Job, c *config.Config) model.Extracted {
 	text := j.Title + "\n" + j.Desc
 	x := model.Extracted{
+		YearsRequired:   yearsRequired(j.Desc),
 		Level:           level(j.Title, j.Desc, c),
 		City:            city(j, c),
 		Mode:            mode(j, c),
@@ -107,16 +110,10 @@ func level(title, desc string, c *config.Config) string {
 	case matchAny(title, c.SeniorTitle):
 		return "senior"
 	}
-	best := 0
-	for _, m := range yearsRe.FindAllStringSubmatch(desc, -1) {
-		if n, _ := strconv.Atoi(m[1]); n >= 1 && n <= 15 && n > best {
-			best = n
-		}
-	}
-	switch {
-	case best >= c.SeniorYears && c.SeniorYears > 0:
+	switch years := yearsRequired(desc); {
+	case years >= c.SeniorYears && c.SeniorYears > 0:
 		return "senior"
-	case best > 0:
+	case years > 0:
 		return "mid"
 	}
 	return "unknown"
@@ -207,4 +204,25 @@ func guessPeriod(v float64) string {
 		return "month"
 	}
 	return "year"
+}
+
+// yearsRequired returns the lowest minimum years of experience the ad asks for,
+// counting only mentions marked with "+"/"o más" or followed by experience wording,
+// so "founded 12 years ago" is ignored. 0 means none stated.
+func yearsRequired(desc string) int {
+	best := 0
+	for _, m := range yearsRe.FindAllStringSubmatchIndex(desc, -1) {
+		n, _ := strconv.Atoi(desc[m[2]:m[3]])
+		if n < 1 || n > 20 {
+			continue
+		}
+		after := desc[m[1]:min(len(desc), m[1]+60)]
+		if m[4] < 0 && !experienceRe.MatchString(after) {
+			continue
+		}
+		if best == 0 || n < best {
+			best = n
+		}
+	}
+	return best
 }
