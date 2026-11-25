@@ -50,17 +50,18 @@ date, market, candidates, gated_pass, gated_excluded, assessed, passed_threshold
 
 ## Dashboard
 
-Formulas, set up once (Google Sheets syntax; the first cell of each block):
+Set up once (Google Sheets syntax):
 
-| Cell | Label | Formula |
-|---|---|---|
-| A1 | Companies assessed | `=COUNTA(Companies!B2:B)` |
-| A2 | Passing (outreach = yes) | `=COUNTIF(Companies!L2:L,"yes")` |
-| A3 | Average company score | `=IFERROR(ROUND(AVERAGE(Companies!K2:K),1),0)` |
-| A4 | Leads collected | `=COUNTA(Leads!C2:C)` |
-| A5 | Drafts waiting | `=COUNTIF(Contacts!I2:I,"drafted")` |
-| A6 | Contacted | `=COUNTIF(Contacts!I2:I,"contacted")` |
-| A7 | Replied | `=COUNTIF(Contacts!I2:I,"replied")` |
-| D1 | By status | `=QUERY(Companies!A2:S,"select R, count(B) where B is not null group by R label count(B) 'companies'",0)` |
-| G1 | Top companies, last 7 days | `=IFERROR(SORT(FILTER({Companies!B2:B,Companies!K2:K,Companies!N2:N},Companies!Q2:Q>=TEXT(TODAY()-7,"yyyy-mm-dd")),2,FALSE),"none yet")` |
-| G15 | Recent runs | `=SORT(FILTER('Run log'!A2:L,'Run log'!A2:A<>""),1,FALSE)` |
+| Cell | Content |
+|---|---|
+| A1:A7 | Labels: Companies assessed, Passing (outreach = yes), Average company score, Leads collected, Drafts waiting, Contacted, Replied |
+| B1 | `=COUNTA(Companies!B2:B)` |
+| B2 | `=COUNTIF(Companies!L2:L,"yes")` |
+| B3 | `=IFERROR(ROUND(AVERAGE(Companies!K2:K),1),0)` |
+| B4 | `=COUNTA(Leads!C2:C)` |
+| B5 | `=COUNTIF(Contacts!I2:I,"drafted")` |
+| B6 | `=COUNTIF(Contacts!I2:I,"contacted")` |
+| B7 | `=COUNTIF(Contacts!I2:I,"replied")` |
+| D1 / D2 | "By status" / `=IFERROR(QUERY(Companies!A2:S,"select R, count(B) where B is not null group by R label R 'status', count(B) 'companies'",0),"no companies yet")` |
+| G1 / G2 | "Top companies, last 7 days" / `=IFERROR(SORT(FILTER({Companies!B2:B,Companies!K2:K,Companies!N2:N},Companies!Q2:Q>=TEXT(TODAY()-7,"yyyy-mm-dd"),Companies!B2:B<>""),2,FALSE),"none yet")` |
+| G24 / G25 | "Recent runs" / `=IFERROR(SORT(FILTER('Run log'!A2:L,'Run log'!A2:A<>""),1,FALSE),"no runs yet")` |
