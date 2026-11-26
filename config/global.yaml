@@ -7,7 +7,8 @@ pass_threshold: 65        # company score needed before contacts and drafts are 
 reassess_days: 60         # skip a company assessed within this window unless it posts a new matching role
 daily_target: 10          # companies fully assessed per run
 max_contacts: 3           # contacts per passing company
-senior_years: 5           # "5+ years" with no seniority in the title counts as senior
+senior_years: 5           # minimum years of experience: "5+ years" counts as senior; a stated minimum below this is excluded
+preferred_years: 10       # roles asking for this many years or more rank higher (flag experience_10_plus)
 
 # Industry tier -> sub-score (0..1). Claude picks one key per company.
 industries:
@@ -40,12 +41,6 @@ stacks:
   node: '\bnode\.?js\b|\bnode\b|\bnest\.?js\b|\bexpress\.?js\b|\bfastify\b|\btypescript\b'
   go: '\bgolang\b|\bgo\b'
   python: '\bpython\b|\bdjango\b|\bfastapi\b|\bflask\b'
-  java: '\bjava\b|\bspring boot\b|\bkotlin\b|\bscala\b'
-  dotnet: '\.net\b|\bc#|\basp\.net\b'
-  php: '\bphp\b|\blaravel\b|\bsymfony\b'
-  ruby: '\bruby\b'
-  rust_cpp: '\brust\b|c\+\+'
-  elixir: '\belixir\b'
 
 # Removed from the text before stack matching, so "go live" is not read as Go.
 stack_noise: ['\bgo (to|live|beyond|through|ahead|further|out|back|above)\b', '\bon the go\b', '\bgo-to\b', '\bgo/no-go\b']

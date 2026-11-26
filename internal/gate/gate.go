@@ -78,6 +78,13 @@ func Run(jobs []model.Job, seen []model.SeenCompany, now time.Time, c *config.Co
 			g.Flags = append(g.Flags, "level_unknown")
 		}
 
+		switch {
+		case x.YearsRequired > 0 && x.YearsRequired < c.SeniorYears:
+			fail("experience_below_min")
+		case c.PreferredYears > 0 && x.YearsRequired >= c.PreferredYears:
+			g.Flags = append(g.Flags, "experience_10_plus")
+		}
+
 		if !stackOK(x, c) {
 			fail("stack")
 		}
